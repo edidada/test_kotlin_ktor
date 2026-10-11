@@ -1,8 +1,8 @@
 # test_kotlin_ktor — ECShop REST API (Kotlin + Ktor)
 
-以 [ECShop](third_party) 旧版 PHP 商城的 URL/表结构为参照，用 Kotlin + Ktor 3 + SQLite 重写的前端无关 REST API。覆盖 `docs/02_url_api_list.md` 的 M0–M4 全部端点（M5 促销写操作按计划排除），金额一律十进制字符串/整数分，错误与鉴权契约见 `docs/03`。
+![CI](https://github.com/edidada/test_kotlin_ktor/actions/workflows/ci.yml/badge.svg)
 
-CI: 三平台 × 双 JDK 矩阵，见下图右上角状态或 `gh run list`。
+以 [ECShop](third_party) 旧版 PHP 商城的 URL/表结构为参照，用 Kotlin + Ktor 3 + SQLite 重写的前端无关 REST API。覆盖 `docs/02_url_api_list.md` 的 M0–M4 全部端点（M5 促销写操作按计划排除），金额一律十进制字符串/整数分，错误与鉴权契约见 `docs/03`。
 
 ## 模块结构（Gradle 多工程）
 
@@ -45,12 +45,15 @@ bash scripts/curl_full_acceptance.sh                  # docs/06 全流程 60+ �
 
 curl 清单与实现差异记录见 `docs/06_curl_testing.md` 附录；本机无 jq 时脚本自动退回 python。
 
-## 文档索引
+## 文档索引（docs/）
 
-- `docs/01`–`03`：迁移背景、URL 清单、API 契约
-- `docs/04`–`05`：数据库 schema / 阶段计划
-- `docs/06_curl_testing.md`：curl 验收 + 本地验收笔记
-- `docs/07_deployment.md`：Linux（systemd）与 Docker（根目录 `Dockerfile`）部署方案
+- `01_libraries` / `04_architecture` / `05_detailed_design`：选型与架构
+- `02_url_api_list`：URL 清单（实现依据）；`09_url_completion_matrix`：完成度矩阵
+- `03_api_contract`：API 契约与错误模型；`10_api_error_factories`
+- `06_curl_testing`：curl 验收 + 本地验收笔记（含实现差异附录）
+- `07_deployment`：**Linux（systemd）与 Docker（根目录 `Dockerfile`）部署方案**；`07_platform_compatibility`；`docs/deploy/`（compose 参考）
+- `08_first_url_tutorial`：第一个 URL 的落地教程；`09_http_server_adapters`：服务器适配器
+- `docs/sql/`：ECShop 原始表结构参考（MySQL）
 
 ## CI
 
