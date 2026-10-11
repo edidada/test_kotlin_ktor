@@ -10,8 +10,11 @@ plugins {
 }
 
 kotlin {
-    // Use a specific Java version to make it easier to work in different environments.
-    jvmToolchain(17)
+    // JVM toolchain is parameterized so CI matrices can build against different JDKs.
+    // Local default stays on 17; override with -PecJavaVersion=21 (or EC_JAVA_VERSION env).
+    val javaVersion = (providers.gradleProperty("ecJavaVersion").orNull
+        ?: System.getenv("EC_JAVA_VERSION") ?: "17").toInt()
+    jvmToolchain(javaVersion)
 }
 
 tasks.withType<Test>().configureEach {
