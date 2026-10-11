@@ -18,6 +18,7 @@ import ecshop.routes.cartRoutes
 import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.checkoutRoutes
 import ecshop.routes.compareRoutes
+import ecshop.routes.createOrderRoutes
 import ecshop.routes.cycleImageRoutes
 import ecshop.routes.emailVerificationRoutes
 import ecshop.routes.exchangeGoodsRoutes
@@ -117,6 +118,7 @@ fun Application.appModule(svc: AppServices) {
             addressRoutes(svc)
             cartRoutes(svc)
             checkoutRoutes(svc)
+            createOrderRoutes(svc)
         }
     }
 }
