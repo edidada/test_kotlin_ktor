@@ -38,10 +38,10 @@ data class AddCartRequest(val goods_id: Long = 0, val quantity: Int = 1)
 @Serializable
 data class UpdateCartRequest(val quantity: Int = 0, val version: Long = 0)
 
-private const val CART_FROM =
+const val CART_FROM =
     "FROM ecs_cart c JOIN ecs_goods g ON g.goods_id = c.goods_id AND g.is_on_sale = 1 AND g.is_delete = 0 "
 
-private const val CART_COLS =
+const val CART_COLS =
     "SELECT c.rec_id, c.goods_id, c.goods_number, c.version, g.goods_name, g.shop_price, g.promote_price, " +
         "g.promote_start_date, g.promote_end_date, g.is_promote, g.goods_number AS stock "
 
