@@ -1,20 +1,15 @@
-package org.example.test.app
+package ecshop
 
-import org.example.test.utils.Printer
+import ecshop.db.Db
+import io.ktor.server.engine.embeddedServer
+import io.ktor.server.netty.Netty
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val name = "Kotlin"
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    val message = "Hello, " + name + "!"
-    val printer = Printer(message)
-    printer.printMessage()
-
-    for (i in 1..5) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        println("i = $i")
-    }
+    val cfg = AppConfig.fromEnvironment()
+    val db = Db(cfg.dbPath)
+    db.initializeSchema()
+    val services = AppServices(db, cfg)
+    embeddedServer(Netty, port = cfg.port, host = cfg.host) {
+        appModule(services)
+    }.start(wait = true)
 }
