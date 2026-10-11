@@ -17,6 +17,17 @@ import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.put
 import java.sql.ResultSet
 
+/** Shared visibility filter for public goods queries. */
+const val GOODS_VISIBLE = "is_on_sale = 1 AND is_delete = 0"
+
+/** Whitelisted ORDER BY clauses for the common goods-list sort values. */
+val GOODS_SORTS = mapOf(
+    "price_asc" to "shop_price ASC",
+    "price_desc" to "shop_price DESC",
+    "newest" to "add_time DESC",
+    "sales" to "click_count DESC",
+)
+
 /** Shared ECSHOP `goods` row projection used by every goods listing endpoint. */
 
 /** ECShop price rule: within an active promotion window, promote_price replaces shop_price. */

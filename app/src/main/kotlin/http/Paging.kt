@@ -39,6 +39,14 @@ fun ApplicationCall.queryLong(name: String): Long? =
         raw.toLongOrNull() ?: throw validationError("$name must be an integer", name)
     }
 
+/** Positive-integer path parameter; 400 validation_error when malformed. */
+fun ApplicationCall.pathLong(name: String = "id"): Long {
+    val raw = parameters[name] ?: throw validationError("$name is required", name)
+    val value = raw.toLongOrNull() ?: throw validationError("$name must be a positive integer", name)
+    if (value < 1) throw validationError("$name must be a positive integer", name)
+    return value
+}
+
 fun ApplicationCall.queryString(name: String): String? =
     request.queryParameters[name]?.takeIf { it.isNotBlank() }
 

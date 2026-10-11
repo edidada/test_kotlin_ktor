@@ -4,6 +4,7 @@ import ecshop.db.Db
 import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
 import ecshop.routes.catalogRoutes
+import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
 import io.ktor.serialization.kotlinx.json.json
@@ -40,6 +41,7 @@ fun Application.appModule(svc: AppServices) {
         route("/api/v1") {
             homeRoutes(svc)
             catalogRoutes(svc)
+            categoryGoodsRoutes(svc)
         }
     }
 }
