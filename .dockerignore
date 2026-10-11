@@ -1,0 +1,10 @@
+.git
+.github
+.gradle
+**/build
+data
+docs
+third_party
+utils
+*.md
+.editorconfig
