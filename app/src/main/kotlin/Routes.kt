@@ -5,12 +5,14 @@ import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
 import ecshop.routes.accountRequestRoutes
 import ecshop.routes.activityRoutes
+import ecshop.routes.adClickRoutes
 import ecshop.routes.addressRoutes
 import ecshop.routes.adDetailRoutes
 import ecshop.routes.articleCategoryRoutes
 import ecshop.routes.articleDetailRoutes
 import ecshop.routes.availabilityRoutes
 import ecshop.routes.bonusRoutes
+import ecshop.routes.bookingRoutes
 import ecshop.routes.brandGoodsRoutes
 import ecshop.routes.brandListRoutes
 import ecshop.routes.catalogRoutes
@@ -34,6 +36,8 @@ import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
 import ecshop.routes.loginRoutes
 import ecshop.routes.messageListRoutes
+import ecshop.routes.messageWriteRoutes
+import ecshop.routes.myCommentRoutes
 import ecshop.routes.orderActionRoutes
 import ecshop.routes.orderPatchRoutes
 import ecshop.routes.orderQueryRoutes
@@ -135,6 +139,10 @@ fun Application.appModule(svc: AppServices) {
             commentsRoutes(svc)
             favoritesRoutes(svc)
             tagWriteRoutes(svc)
+            bookingRoutes(svc)
+            myCommentRoutes(svc)
+            messageWriteRoutes(svc)
+            adClickRoutes(svc)
         }
     }
 }
