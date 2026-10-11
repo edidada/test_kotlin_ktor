@@ -32,6 +32,7 @@ import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
 import ecshop.routes.loginRoutes
 import ecshop.routes.messageListRoutes
+import ecshop.routes.orderActionRoutes
 import ecshop.routes.orderQueryRoutes
 import ecshop.routes.packageRoutes
 import ecshop.routes.passwordResetRoutes
@@ -121,6 +122,7 @@ fun Application.appModule(svc: AppServices) {
             checkoutRoutes(svc)
             createOrderRoutes(svc)
             orderQueryRoutes(svc)
+            orderActionRoutes(svc)
         }
     }
 }
