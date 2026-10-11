@@ -3,8 +3,10 @@ package ecshop
 import ecshop.db.Db
 import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
-import ecshop.routes.adDetailRoutes
+import ecshop.routes.accountRequestRoutes
 import ecshop.routes.activityRoutes
+import ecshop.routes.addressRoutes
+import ecshop.routes.adDetailRoutes
 import ecshop.routes.articleCategoryRoutes
 import ecshop.routes.articleDetailRoutes
 import ecshop.routes.availabilityRoutes
@@ -15,6 +17,7 @@ import ecshop.routes.catalogRoutes
 import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.compareRoutes
 import ecshop.routes.cycleImageRoutes
+import ecshop.routes.emailVerificationRoutes
 import ecshop.routes.exchangeGoodsRoutes
 import ecshop.routes.feedRoutes
 import ecshop.routes.goodsDetailRoutes
@@ -27,6 +30,7 @@ import ecshop.routes.homeRoutes
 import ecshop.routes.loginRoutes
 import ecshop.routes.messageListRoutes
 import ecshop.routes.packageRoutes
+import ecshop.routes.passwordResetRoutes
 import ecshop.routes.passwordRoutes
 import ecshop.routes.profileRoutes
 import ecshop.routes.promotionRoutes
@@ -105,6 +109,10 @@ fun Application.appModule(svc: AppServices) {
             profileRoutes(svc)
             passwordRoutes(svc)
             bonusRoutes(svc)
+            emailVerificationRoutes(svc)
+            passwordResetRoutes(svc)
+            accountRequestRoutes(svc)
+            addressRoutes(svc)
         }
     }
 }
