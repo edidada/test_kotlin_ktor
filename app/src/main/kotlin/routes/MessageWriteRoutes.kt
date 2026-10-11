@@ -84,6 +84,7 @@ fun Route.messageWriteRoutes(svc: AppServices) {
                 val msgId = rs.long("msg_id")
                 val json = buildJsonObject {
                     put("msg_id", msgId)
+                    put("id", msgId)
                     put("username", rs.str("user_name"))
                     put("email", rs.str("user_email"))
                     put("title", rs.str("msg_title"))
@@ -135,6 +136,7 @@ fun Route.messageWriteRoutes(svc: AppServices) {
 
 private fun messageJson(rs: ResultSet) = buildJsonObject {
     put("msg_id", rs.long("msg_id"))
+    put("id", rs.long("msg_id"))
     put("username", rs.str("user_name"))
     put("email", rs.str("user_email"))
     put("title", rs.str("msg_title"))

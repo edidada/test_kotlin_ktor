@@ -102,7 +102,7 @@ fun Route.bookingRoutes(svc: AppServices) {
             c.selectOne(
                 "SELECT rec_id FROM ecs_booking_goods WHERE user_id = ? AND goods_id = ?",
                 listOf(uid, req.goods_id),
-            ) { rs -> buildJsonObject { put("booking_id", rs.long("rec_id")) } }
+            ) { rs -> buildJsonObject { put("booking_id", rs.long("rec_id")); put("id", rs.long("rec_id")) } }
         } ?: throw conflict("booking vanished")
         call.respond(HttpStatusCode.Created, created)
     }

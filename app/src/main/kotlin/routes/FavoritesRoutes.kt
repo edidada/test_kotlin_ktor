@@ -116,6 +116,7 @@ fun Route.favoritesRoutes(svc: AppServices) {
 
 private fun favoriteJson(rs: ResultSet) = buildJsonObject {
     put("favorite_id", rs.long("rec_id"))
+    put("id", rs.long("rec_id"))
     put("goods_id", rs.long("goods_id"))
     put("name", rs.str("goods_name"))
     put("price", displayPriceRs(rs))

@@ -95,6 +95,7 @@ fun Route.commentsRoutes(svc: AppServices) {
 
 internal fun commentJson(rs: ResultSet) = buildJsonObject {
     put("comment_id", rs.long("comment_id"))
+    put("id", rs.long("comment_id"))
     put("user_id", rs.long("user_id"))
     put("user_name", rs.str("user_name"))
     put("content", rs.str("content"))

@@ -174,6 +174,7 @@ private fun validateRegionChain(
 
 private fun addressJson(rs: java.sql.ResultSet) = buildJsonObject {
     put("address_id", rs.long("address_id"))
+    put("id", rs.long("address_id"))
     put("consignee", rs.str("consignee"))
     put("country_id", rs.long("country_id"))
     put("province_id", rs.long("province_id"))
