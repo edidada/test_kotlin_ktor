@@ -311,3 +311,17 @@ curl --noproxy '*' -fsS -X POST "$BASE_URL/api/v1/auth/login" \
 ```
 
 测试结束后删除临时 cookie：`rm -f "$COOKIE_JAR"`。
+
+## 实现落地补充（2026-10-11 本地验收记录）
+
+以下为按本文实际跑通验收时确认的实现差异与补充，不改动上文原始内容。
+
+- 配置来源：没有 `config/app.dev.conf`。服务读取环境变量 `EC_PORT`（默认 8080）、`EC_DB_PATH`（默认 `data/ecshop.db`，本文命令按 `data/ecshop.sqlite3` 时需显式设置）、`EC_PAYMENT_CALLBACK_HMAC_SECRET`（默认 `dev-payment-callback-secret`）。若本机 8080 被占用（如 Apache），换端口启动即可：`EC_PORT=18080 EC_DB_PATH=data/ecshop.sqlite3 app/build/install/app/bin/app`。
+- 注册请求按 `docs/03` 必须带 `"agreement_accepted":true`，上文的 register/login 示例 JSON 需补该字段。
+- 响应 id 字段：POST 响应同时返回专名 id（`request_id`/`address_id`/`order_id`/`favorite_id`/`comment_id`/`msg_id`/`booking_id`）与统一别名 `id`，上文的 `jq -r .id` 取值均可用。`GET /me/orders/{id}` 详情为 `{order:{...},items:[...]}`，`order_amount` 需取 `.order.order_amount`；`GET /api/v1/me/cart` 返回 `{items,total_quantity}`；`GET /api/v1/votes/current` 返回 `{vote,options}`。
+- 金额换算：`ecs_shipping.shipping_fee`、`ecs_payment.pay_fee` 等 DECIMAL(12,2) 元列统一经 `ResultSet.yuanCents()`（8.00 → 800 分）参与计算；`*_cents` 整数列仍用 `cents()`。
+- jq 可选：本机没有 jq 时，脚本自动退回 `python3`/`python` 提取 JSON 字段。
+- 可直接执行的验收脚本：
+  - `bash scripts/curl_cart_example.sh` —— 上节引用的购物车乐观锁端到端脚本（可通过 `BASE_URL`/`GOODS_ID` 覆盖）。
+  - `bash scripts/curl_full_acceptance.sh` —— 全流程验收：注册、红包、邮箱验证、余额申请/支付/取消、地址、quote、下单幂等重放、余额抵扣、改支付方式/地址、支付回调（含重放与错误签名）、确认收货/取消/返回购物车、收藏、标签、缺货登记、评论、留言、投票、广告点击、团购/推广、订阅/退订，最后密码重置与改密。重复运行前它会把示例红包 `202609230001` 重置为未领取。
+- 2026-10-11 本机（Windows，Gradle JDK 17）执行结果：`./gradlew build` 通过；只读端点全部 200；`curl_cart_example.sh` 与 `curl_full_acceptance.sh` 全部 PASS。
