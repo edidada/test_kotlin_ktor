@@ -12,18 +12,24 @@ import ecshop.routes.brandListRoutes
 import ecshop.routes.catalogRoutes
 import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.compareRoutes
+import ecshop.routes.cycleImageRoutes
 import ecshop.routes.exchangeGoodsRoutes
+import ecshop.routes.feedRoutes
 import ecshop.routes.goodsDetailRoutes
 import ecshop.routes.goodsGalleryRoutes
 import ecshop.routes.goodsPriceQuoteRoutes
 import ecshop.routes.goodsSearchRoutes
+import ecshop.routes.goodsWidgetRoutes
 import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
 import ecshop.routes.messageListRoutes
 import ecshop.routes.packageRoutes
 import ecshop.routes.promotionRoutes
+import ecshop.routes.quotationRoutes
 import ecshop.routes.regionRoutes
 import ecshop.routes.shippingOptionsRoutes
+import ecshop.routes.sitemapRoutes
+import ecshop.routes.tagCloudRoutes
 import ecshop.routes.topicRoutes
 import ecshop.routes.voteCurrentRoutes
 import io.ktor.serialization.kotlinx.json.json
@@ -56,6 +62,11 @@ fun Application.appModule(svc: AppServices) {
     routing {
         // M0 health check.
         healthRoutes(svc)
+        // M4 document endpoints (not JSON, not under /api/v1).
+        sitemapRoutes(svc)
+        feedRoutes(svc)
+        cycleImageRoutes(svc)
+        goodsWidgetRoutes(svc)
         // Business API (docs/02_url_api_list.md).
         route("/api/v1") {
             homeRoutes(svc)
@@ -80,6 +91,8 @@ fun Application.appModule(svc: AppServices) {
             messageListRoutes(svc)
             adDetailRoutes(svc)
             goodsGalleryRoutes(svc)
+            tagCloudRoutes(svc)
+            quotationRoutes(svc)
         }
     }
 }
