@@ -37,6 +37,7 @@ import ecshop.routes.orderPatchRoutes
 import ecshop.routes.orderQueryRoutes
 import ecshop.routes.packageRoutes
 import ecshop.routes.passwordResetRoutes
+import ecshop.routes.paymentCallbackRoutes
 import ecshop.routes.passwordRoutes
 import ecshop.routes.profileRoutes
 import ecshop.routes.promotionRoutes
@@ -125,6 +126,7 @@ fun Application.appModule(svc: AppServices) {
             orderQueryRoutes(svc)
             orderActionRoutes(svc)
             orderPatchRoutes(svc)
+            paymentCallbackRoutes(svc)
         }
     }
 }
