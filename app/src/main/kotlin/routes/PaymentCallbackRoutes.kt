@@ -2,12 +2,12 @@ package ecshop.routes
 
 import ecshop.AppServices
 import ecshop.db.amount
-import ecshop.db.cents
 import ecshop.db.execute
 import ecshop.db.insert
 import ecshop.db.long
 import ecshop.db.selectOne
 import ecshop.db.str
+import ecshop.db.yuanCents
 import ecshop.http.Money
 import ecshop.http.conflict
 import ecshop.http.notFound
@@ -67,7 +67,7 @@ fun Route.paymentCallbackRoutes(svc: AppServices) {
             val order = c.selectOne(
                 "SELECT order_id, user_id, order_status, order_amount FROM ecs_order_info WHERE order_sn = ?",
                 listOf(orderSn),
-            ) { rs -> listOf(rs.long("order_id"), rs.long("user_id"), rs.str("order_status"), rs.cents("order_amount")) }
+            ) { rs -> listOf(rs.long("order_id"), rs.long("user_id"), rs.str("order_status"), rs.yuanCents("order_amount")) }
                 ?: throw notFound("order not found")
             val orderId = order[0]
             if (order[3] != paidCents) throw conflict("amount does not match the order total")

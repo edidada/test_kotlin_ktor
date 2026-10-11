@@ -126,6 +126,8 @@ INSERT OR IGNORE INTO ecs_article_cat(cat_id, cat_name, cat_desc) VALUES(1, '商
 INSERT OR IGNORE INTO ecs_article(article_id, cat_id, title, author, article_desc, content, is_open) VALUES(1, 1, 'C++ ECSHOP 项目说明', 'cpp_ecshop', '用于验证文章 URL 的示例文章', '这是来自 SQLite ecs_article 表的示例正文。', 1);
 INSERT OR IGNORE INTO ecs_region(region_id, parent_id, region_name, region_type) VALUES(1, 0, '中国', 1);
 INSERT OR IGNORE INTO ecs_region(region_id, parent_id, region_name, region_type) VALUES(2, 1, '北京市', 2);
+INSERT OR IGNORE INTO ecs_region(region_id, parent_id, region_name, region_type) VALUES(52, 2, '北京市辖区', 3);
+INSERT OR IGNORE INTO ecs_region(region_id, parent_id, region_name, region_type) VALUES(500, 52, '朝阳区', 4);
 INSERT OR IGNORE INTO ecs_goods(goods_id,cat_id,goods_sn,goods_name,brand_id,goods_number,market_price,shop_price,goods_brief,goods_desc,is_on_sale,is_delete) VALUES(12,1,'CPP-EC-001','C++ 入门商品',1,18,69.90,49.90,'用于验证第一个 HTTP URL 的示例商品','来自 SQLite ecs_goods 表',1,0);
 INSERT OR IGNORE INTO ecs_goods(goods_id,cat_id,goods_sn,goods_name,brand_id,goods_number,market_price,shop_price,goods_brief,goods_desc,is_on_sale,is_delete) VALUES(14,1,'CPP-EC-003','C++ 进阶商品',1,9,99.90,79.90,'用于验证商品对比的第二个公开商品','来自 SQLite ecs_goods 表',1,0);
 INSERT OR IGNORE INTO ecs_goods(goods_id,cat_id,goods_sn,goods_name,brand_id,goods_number,market_price,shop_price,goods_brief,goods_desc,is_on_sale,is_delete) VALUES(13,1,'CPP-EC-002','已下架商品',1,5,129.90,99.90,'不可公开访问','用于验证可见性过滤',0,0);

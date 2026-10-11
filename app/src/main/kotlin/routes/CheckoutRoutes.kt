@@ -2,11 +2,11 @@ package ecshop.routes
 
 import ecshop.AppServices
 import ecshop.db.amount
-import ecshop.db.cents
 import ecshop.db.long
 import ecshop.db.select
 import ecshop.db.selectOne
 import ecshop.db.str
+import ecshop.db.yuanCents
 import ecshop.http.Money
 import ecshop.http.notFound
 import ecshop.http.requireUserId
@@ -88,9 +88,9 @@ fun Route.checkoutRoutes(svc: AppServices) {
         val quote = svc.db.read { c ->
             c.selectOne("SELECT address_id FROM ecs_user_address WHERE address_id = ? AND user_id = ?", listOf(req.address_id, uid)) { it.long("address_id") }
                 ?: throw notFound("address not found")
-            val shipping = c.selectOne("SELECT shipping_fee FROM ecs_shipping WHERE shipping_id = ? AND enabled = 1", listOf(req.shipping_id)) { rs -> rs.cents("shipping_fee") }
+            val shipping = c.selectOne("SELECT shipping_fee FROM ecs_shipping WHERE shipping_id = ? AND enabled = 1", listOf(req.shipping_id)) { rs -> rs.yuanCents("shipping_fee") }
                 ?: throw notFound("shipping method not found")
-            val payment = c.selectOne("SELECT pay_fee FROM ecs_payment WHERE pay_id = ? AND enabled = 1", listOf(req.payment_id)) { rs -> rs.cents("pay_fee") }
+            val payment = c.selectOne("SELECT pay_fee FROM ecs_payment WHERE pay_id = ? AND enabled = 1", listOf(req.payment_id)) { rs -> rs.yuanCents("pay_fee") }
                 ?: throw notFound("payment method not found")
             val lines = c.select(
                 CART_COLS + CART_FROM + "WHERE c.user_id = ? ORDER BY c.rec_id",

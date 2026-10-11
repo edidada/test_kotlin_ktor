@@ -1,12 +1,12 @@
 package ecshop.routes
 
 import ecshop.AppServices
-import ecshop.db.cents
 import ecshop.db.execute
 import ecshop.db.insert
 import ecshop.db.long
 import ecshop.db.selectOne
 import ecshop.db.str
+import ecshop.db.yuanCents
 import ecshop.http.Money
 import ecshop.http.conflict
 import ecshop.http.notFound
@@ -59,7 +59,7 @@ fun Route.orderPatchRoutes(svc: AppServices) {
             val order = c.selectOne(
                 "SELECT order_status, payment_fee, order_amount FROM ecs_order_info WHERE order_id = ? AND user_id = ?",
                 listOf(orderId, uid),
-            ) { rs -> Triple(rs.str("order_status"), rs.cents("payment_fee"), rs.cents("order_amount")) } ?: throw notFound("order not found")
+            ) { rs -> Triple(rs.str("order_status"), rs.yuanCents("payment_fee"), rs.yuanCents("order_amount")) } ?: throw notFound("order not found")
             if (order.first != "pending_payment") throw conflict("order is not awaiting payment")
             val outstanding = order.third - order.second
             if (outstanding <= 0L) throw conflict("order balance is already settled")
@@ -113,13 +113,13 @@ fun Route.orderPatchRoutes(svc: AppServices) {
             val order = c.selectOne(
                 "SELECT order_status, pay_id, payment_fee, order_amount FROM ecs_order_info WHERE order_id = ? AND user_id = ?",
                 listOf(orderId, uid),
-            ) { rs -> Quad(rs.str("order_status"), rs.long("pay_id"), rs.cents("payment_fee"), rs.cents("order_amount")) } ?: throw notFound("order not found")
+            ) { rs -> Quad(rs.str("order_status"), rs.long("pay_id"), rs.yuanCents("payment_fee"), rs.yuanCents("order_amount")) } ?: throw notFound("order not found")
             if (order.status != "pending_payment") throw conflict("order is not awaiting payment")
             if (order.payId == req.payment_id) throw conflict("payment method unchanged")
             val newPay = c.selectOne(
                 "SELECT pay_fee FROM ecs_payment WHERE pay_id = ? AND enabled = 1",
                 listOf(req.payment_id),
-            ) { rs -> rs.cents("pay_fee") } ?: throw notFound("payment method not found")
+            ) { rs -> rs.yuanCents("pay_fee") } ?: throw notFound("payment method not found")
             val base = order.orderAmount - order.paymentFee
             val updated = c.execute(
                 "UPDATE ecs_order_info SET pay_id = ?, payment_fee = ?, order_amount = ? WHERE order_id = ? AND user_id = ? AND order_status = 'pending_payment'",

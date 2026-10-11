@@ -10,6 +10,7 @@ import ecshop.db.longOrNull
 import ecshop.db.select
 import ecshop.db.selectOne
 import ecshop.db.str
+import ecshop.db.yuanCents
 import ecshop.db.strOrNull
 import ecshop.http.Money.fromCents
 import ecshop.http.Money.requireCents
@@ -70,6 +71,7 @@ fun Route.accountRequestRoutes(svc: AppServices) {
                     HttpStatusCode.Created,
                     buildJsonObject {
                         put("request_id", recId)
+                        put("id", recId)
                         put("kind", "deposit")
                         put("amount", fromCents(cents))
                         put("payment_id", pid)
@@ -101,6 +103,7 @@ fun Route.accountRequestRoutes(svc: AppServices) {
                 call.respond(
                     HttpStatusCode.Created,
                     buildJsonObject {
+                    put("id", result)
                         put("request_id", result)
                         put("kind", "withdrawal")
                         put("amount", fromCents(cents))
@@ -221,7 +224,7 @@ fun Route.accountRequestRoutes(svc: AppServices) {
             val payment = c.selectOne(
                 "SELECT pay_name, pay_fee FROM ecs_payment WHERE pay_id = ? AND enabled = 1",
                 listOf(body.payment_id),
-            ) { rs -> rs.str("pay_name") to rs.cents("pay_fee") }
+            ) { rs -> rs.str("pay_name") to rs.yuanCents("pay_fee") }
                 ?: throw validationError("payment method is not available", "payment_id")
             val feeCents = payment.second
             val total = row.second + feeCents

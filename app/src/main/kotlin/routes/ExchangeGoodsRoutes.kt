@@ -37,7 +37,7 @@ fun Route.exchangeGoodsRoutes(svc: AppServices) {
         val categoryId = call.queryLong("category_id")
         val integralMin = call.queryLong("integral_min")
         val integralMax = call.queryLong("integral_max")
-        val sort = resolveSort(call.queryString("sort"), EXCHANGE_SORTS, "eg.last_update", "sort")
+        val sort = resolveSort(call.queryString("sort"), EXCHANGE_SORTS, "eg.goods_id", "sort")
         val order = resolveOrder(call.queryString("order"), "desc")
         val paging = call.parsePaging()
 

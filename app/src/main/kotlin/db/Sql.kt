@@ -82,3 +82,7 @@ fun ResultSet.amount(col: String): String =
 /** Integer-cent column as Long. */
 fun ResultSet.cents(col: String): Long =
     getBigDecimal(col)?.setScale(0, RoundingMode.HALF_UP)?.longValueExact() ?: 0L
+
+/** Two-decimal yuan DECIMAL column converted to integer cents (8.00 -> 800). */
+fun ResultSet.yuanCents(col: String): Long =
+    getBigDecimal(col)?.movePointRight(2)?.setScale(0, RoundingMode.HALF_UP)?.longValueExact() ?: 0L

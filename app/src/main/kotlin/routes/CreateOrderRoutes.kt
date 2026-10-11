@@ -2,13 +2,13 @@ package ecshop.routes
 
 import ecshop.AppServices
 import ecshop.db.amount
-import ecshop.db.cents
 import ecshop.db.execute
 import ecshop.db.insert
 import ecshop.db.long
 import ecshop.db.select
 import ecshop.db.selectOne
 import ecshop.db.str
+import ecshop.db.yuanCents
 import ecshop.http.Money
 import ecshop.http.conflict
 import ecshop.http.invalidState
@@ -82,11 +82,11 @@ fun Route.createOrderRoutes(svc: AppServices) {
             val shipping = c.selectOne(
                 "SELECT shipping_fee FROM ecs_shipping WHERE shipping_id = ? AND enabled = 1",
                 listOf(req.shipping_id),
-            ) { rs -> rs.cents("shipping_fee") } ?: throw notFound("shipping method not found")
+            ) { rs -> rs.yuanCents("shipping_fee") } ?: throw notFound("shipping method not found")
             val payment = c.selectOne(
                 "SELECT pay_fee FROM ecs_payment WHERE pay_id = ? AND enabled = 1",
                 listOf(req.payment_id),
-            ) { rs -> rs.cents("pay_fee") } ?: throw notFound("payment method not found")
+            ) { rs -> rs.yuanCents("pay_fee") } ?: throw notFound("payment method not found")
             val lines = c.select(
                 CART_COLS + CART_FROM + "WHERE c.user_id = ? ORDER BY c.rec_id",
                 listOf(uid),
@@ -156,6 +156,7 @@ internal fun orderSummary(c: java.sql.Connection, orderId: Long, uid: Long): Jso
     ) { rs ->
         buildJsonObject {
             put("order_id", rs.long("order_id"))
+            put("id", rs.long("order_id"))
             put("order_sn", rs.str("order_sn"))
             put("status", rs.str("order_status"))
             put("goods_amount", rs.amount("goods_amount"))
