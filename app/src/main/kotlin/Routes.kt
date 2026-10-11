@@ -7,6 +7,7 @@ import ecshop.routes.adDetailRoutes
 import ecshop.routes.activityRoutes
 import ecshop.routes.articleCategoryRoutes
 import ecshop.routes.articleDetailRoutes
+import ecshop.routes.availabilityRoutes
 import ecshop.routes.brandGoodsRoutes
 import ecshop.routes.brandListRoutes
 import ecshop.routes.catalogRoutes
@@ -22,10 +23,12 @@ import ecshop.routes.goodsSearchRoutes
 import ecshop.routes.goodsWidgetRoutes
 import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
+import ecshop.routes.loginRoutes
 import ecshop.routes.messageListRoutes
 import ecshop.routes.packageRoutes
 import ecshop.routes.promotionRoutes
 import ecshop.routes.quotationRoutes
+import ecshop.routes.registerRoutes
 import ecshop.routes.regionRoutes
 import ecshop.routes.shippingOptionsRoutes
 import ecshop.routes.sitemapRoutes
@@ -93,6 +96,9 @@ fun Application.appModule(svc: AppServices) {
             goodsGalleryRoutes(svc)
             tagCloudRoutes(svc)
             quotationRoutes(svc)
+            registerRoutes(svc)
+            availabilityRoutes(svc)
+            loginRoutes(svc)
         }
     }
 }
