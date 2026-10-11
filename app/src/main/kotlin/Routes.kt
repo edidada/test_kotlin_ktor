@@ -14,6 +14,7 @@ import ecshop.routes.bonusRoutes
 import ecshop.routes.brandGoodsRoutes
 import ecshop.routes.brandListRoutes
 import ecshop.routes.catalogRoutes
+import ecshop.routes.cartRoutes
 import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.compareRoutes
 import ecshop.routes.cycleImageRoutes
@@ -113,6 +114,7 @@ fun Application.appModule(svc: AppServices) {
             passwordResetRoutes(svc)
             accountRequestRoutes(svc)
             addressRoutes(svc)
+            cartRoutes(svc)
         }
     }
 }
