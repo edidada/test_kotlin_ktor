@@ -3,6 +3,7 @@ package ecshop
 import ecshop.db.Db
 import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
+import ecshop.routes.adDetailRoutes
 import ecshop.routes.activityRoutes
 import ecshop.routes.articleCategoryRoutes
 import ecshop.routes.articleDetailRoutes
@@ -13,12 +14,16 @@ import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.compareRoutes
 import ecshop.routes.exchangeGoodsRoutes
 import ecshop.routes.goodsDetailRoutes
+import ecshop.routes.goodsGalleryRoutes
 import ecshop.routes.goodsPriceQuoteRoutes
 import ecshop.routes.goodsSearchRoutes
 import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
+import ecshop.routes.messageListRoutes
 import ecshop.routes.packageRoutes
+import ecshop.routes.promotionRoutes
 import ecshop.routes.regionRoutes
+import ecshop.routes.shippingOptionsRoutes
 import ecshop.routes.topicRoutes
 import ecshop.routes.voteCurrentRoutes
 import io.ktor.serialization.kotlinx.json.json
@@ -70,6 +75,11 @@ fun Application.appModule(svc: AppServices) {
             topicRoutes(svc)
             voteCurrentRoutes(svc)
             exchangeGoodsRoutes(svc)
+            shippingOptionsRoutes(svc)
+            promotionRoutes(svc)
+            messageListRoutes(svc)
+            adDetailRoutes(svc)
+            goodsGalleryRoutes(svc)
         }
     }
 }
