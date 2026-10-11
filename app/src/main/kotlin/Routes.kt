@@ -17,11 +17,13 @@ import ecshop.routes.catalogRoutes
 import ecshop.routes.cartRoutes
 import ecshop.routes.categoryGoodsRoutes
 import ecshop.routes.checkoutRoutes
+import ecshop.routes.commentsRoutes
 import ecshop.routes.compareRoutes
 import ecshop.routes.createOrderRoutes
 import ecshop.routes.cycleImageRoutes
 import ecshop.routes.emailVerificationRoutes
 import ecshop.routes.exchangeGoodsRoutes
+import ecshop.routes.favoritesRoutes
 import ecshop.routes.feedRoutes
 import ecshop.routes.goodsDetailRoutes
 import ecshop.routes.goodsGalleryRoutes
@@ -47,8 +49,10 @@ import ecshop.routes.regionRoutes
 import ecshop.routes.shippingOptionsRoutes
 import ecshop.routes.sitemapRoutes
 import ecshop.routes.tagCloudRoutes
+import ecshop.routes.tagWriteRoutes
 import ecshop.routes.topicRoutes
 import ecshop.routes.voteCurrentRoutes
+import ecshop.routes.voteResponseRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -127,6 +131,10 @@ fun Application.appModule(svc: AppServices) {
             orderActionRoutes(svc)
             orderPatchRoutes(svc)
             paymentCallbackRoutes(svc)
+            voteResponseRoutes(svc)
+            commentsRoutes(svc)
+            favoritesRoutes(svc)
+            tagWriteRoutes(svc)
         }
     }
 }
