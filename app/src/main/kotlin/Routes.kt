@@ -8,6 +8,7 @@ import ecshop.routes.activityRoutes
 import ecshop.routes.adClickRoutes
 import ecshop.routes.addressRoutes
 import ecshop.routes.adDetailRoutes
+import ecshop.routes.affiliateRoutes
 import ecshop.routes.articleCategoryRoutes
 import ecshop.routes.articleDetailRoutes
 import ecshop.routes.availabilityRoutes
@@ -32,12 +33,14 @@ import ecshop.routes.goodsGalleryRoutes
 import ecshop.routes.goodsPriceQuoteRoutes
 import ecshop.routes.goodsSearchRoutes
 import ecshop.routes.goodsWidgetRoutes
+import ecshop.routes.groupBuyRoutes
 import ecshop.routes.healthRoutes
 import ecshop.routes.homeRoutes
 import ecshop.routes.loginRoutes
 import ecshop.routes.messageListRoutes
 import ecshop.routes.messageWriteRoutes
 import ecshop.routes.myCommentRoutes
+import ecshop.routes.newsletterRoutes
 import ecshop.routes.orderActionRoutes
 import ecshop.routes.orderPatchRoutes
 import ecshop.routes.orderQueryRoutes
@@ -143,6 +146,9 @@ fun Application.appModule(svc: AppServices) {
             myCommentRoutes(svc)
             messageWriteRoutes(svc)
             adClickRoutes(svc)
+            groupBuyRoutes(svc)
+            affiliateRoutes(svc)
+            newsletterRoutes(svc)
         }
     }
 }
