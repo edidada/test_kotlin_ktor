@@ -3,13 +3,16 @@ package ecshop
 import ecshop.db.Db
 import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
+import ecshop.routes.catalogRoutes
 import ecshop.routes.healthRoutes
+import ecshop.routes.homeRoutes
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
 import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
+import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import kotlinx.serialization.json.Json
 
@@ -33,5 +36,10 @@ fun Application.appModule(svc: AppServices) {
     routing {
         // M0 health check.
         healthRoutes(svc)
+        // Business API (docs/02_url_api_list.md).
+        route("/api/v1") {
+            homeRoutes(svc)
+            catalogRoutes(svc)
+        }
     }
 }
