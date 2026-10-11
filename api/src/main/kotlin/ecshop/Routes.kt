@@ -1,6 +1,5 @@
 package ecshop
 
-import ecshop.db.Db
 import ecshop.http.installApiErrors
 import ecshop.http.installRequestId
 import ecshop.routes.accountRequestRoutes
@@ -69,9 +68,6 @@ import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import kotlinx.serialization.json.Json
-
-/** Dependencies handed to every route module. */
-class AppServices(val db: Db, val config: AppConfig)
 
 fun Application.appModule(svc: AppServices) {
     install(DefaultHeaders) { header("X-Engine", "kotlin-ktor-ecshop") }

@@ -16,10 +16,12 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 
-// Include the `app` and `utils` subprojects in the build.
-// If there are changes in only one of the projects, Gradle will rebuild only the one that has changed.
-// Learn more about structuring projects with Gradle - https://docs.gradle.org/8.7/userguide/multi_project_builds.html
+// Multi-project layout (industrial layering, dependencies point one way):
+//   :core  persistence + http plumbing + config (no Ktor routing)
+//   :api   all Ktor route modules + appModule wiring (:core)
+//   :app   process entry (App.kt), resources, distribution/fat jar (:api)
+include(":core")
+include(":api")
 include(":app")
-include(":utils")
 
 rootProject.name = "test_kotlin_ktor"
