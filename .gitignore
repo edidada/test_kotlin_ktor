@@ -45,3 +45,6 @@ third_party/
 ### Local SQLite data ###
 data/
 *.db
+
+### Maven ###
+target/
