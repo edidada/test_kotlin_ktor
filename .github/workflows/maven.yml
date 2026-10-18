@@ -1,0 +1,56 @@
+# Maven CI for the `mvn` branch (the Gradle workflow in ci.yml only fires on main/PRs).
+# Same matrix as ci.yml: three OSes x JDK 17/21, building the reactor with Maven.
+name: Maven CI
+
+on:
+  push:
+    branches: [mvn]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: ${{ matrix.os }} / JDK ${{ matrix.jdk }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        jdk: ['17', '21']
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ matrix.jdk }}
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+          cache: maven
+
+      - name: Build (mvn -B package)
+        shell: bash
+        run: mvn -B -ntp package
+
+      - name: Verify fat jar exists
+        shell: bash
+        run: ls -l app/target/ecshop-app-*-all.jar
+
+      - name: Smoke test (java -jar, /healthz)
+        shell: bash
+        run: |
+          JAR=$(ls app/target/ecshop-app-*-all.jar)
+          EC_PORT=18099 EC_DB_PATH=target/smoke.sqlite3 java -jar "$JAR" &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID 2>/dev/null || true' EXIT
+          for i in $(seq 1 30); do
+            if curl -fsS "http://127.0.0.1:18099/healthz" >/dev/null 2>&1; then
+              curl -fsS "http://127.0.0.1:18099/healthz"
+              echo
+              echo "HEALTHZ OK"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "server did not become healthy" >&2
+          exit 1
